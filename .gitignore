@@ -1,21 +1,22 @@
-﻿# Django
-*.log
-*.pot
-*.pyc
+﻿# Python
 __pycache__/
+*.py[cod]
+
+# Django
 db.sqlite3
 media/
+*.log
+
+# Environments
+.venv/
+env/
+venv/
 .env
 
-# Virtual environment
-.venv/
-venv/
-env/
-
-# IDE
+# IDEs
 .idea/
 .vscode/
 
-# OS
+# System
 .DS_Store
 Thumbs.db
