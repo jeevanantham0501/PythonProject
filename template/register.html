@@ -1,0 +1,110 @@
+{% load static %}
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Register</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<style>
+/* reuse same styles as login – shortened for brevity */
+:root {
+  --txt: #000;
+  --txt-soft: #444;
+  --underline: #000000cc;
+  --btn-bg: #0b0f1a;
+  --btn-hover: #1c2333;
+  --error: #b41f1f;
+  --link: #0046ff;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  color: var(--txt);
+  background:
+    /* Lighter overlay for better image visibility */
+    linear-gradient(rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.1)),
+    /* Background image */
+    url("{% static 'img/forest-bg.jpg' %}");
+  background-size: cover;
+  background-position: center center;  /* More centered position */
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.logo {
+  height: 42px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+.logo-text {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+}
+
+.auth-card{position:relative;width:340px;padding:2.3rem 2.5rem;border-radius:12px;background:rgba(255,255,255,.18);box-shadow:0 8px 24px rgba(0,0,0,.35);overflow:hidden}
+.auth-card::before{content:"";position:absolute;inset:0;background:rgba(255,255,255,.18);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-radius:inherit;z-index:-1}
+h2{text-align:center;margin-bottom:2rem;font-size:1.7rem;font-weight:600}
+.field{position:relative;margin-bottom:1.4rem}
+.field input{width:100%;padding:.7rem 2.2rem .7rem .55rem;background:transparent;border:none;border-bottom:1.5px solid #000000cc;font-size:.95rem;color:#000;outline:none}
+.field input::placeholder{color:#444}
+.field i{position:absolute;right:.3rem;top:50%;transform:translateY(-50%);font-size:1.1rem;color:#000}
+.btn{width:100%;padding:.8rem 0;background:#0b0f1a;border:none;border-radius:26px;color:#fff;font-weight:600;font-size:1rem;cursor:pointer}
+.btn:hover{background:#1c2333}
+.msg,.field-error{color:#b41f1f;font-size:.82rem;text-align:center;margin-top:-.5rem}
+.bottom-link{text-align:center;font-size:.85rem;margin-top:1.6rem}
+.bottom-link a{color:#0046ff;text-decoration:none;font-weight:500}
+  .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 1rem;
+    }
+
+    .logo {
+      height: 40px;
+    }
+
+    .logo-text {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: black;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+</style></head><body>
+<div class="logo-container">
+    <img src="{% static 'img/logo3.png' %}" class="logo" alt="Test Tracker Logo">
+    <span class="logo-text">Test Tracker</span>
+  </div>
+
+<form class="auth-card" method="post" novalidate>{% csrf_token %}
+<h2>Register</h2>
+{% for m in messages %}{% if 'error' in m.tags %}
+  <p class="msg">{{ m }}</p>{% endif %}{% endfor %}
+<div class="field"><input name="username" placeholder="Username" value="{{ form.username.value|default_if_none:'' }}" required><i class="bi bi-person"></i></div>
+{% if form.username.errors %}<p class="field-error">{{ form.username.errors.0 }}</p>{% endif %}
+<div class="field"><input type="email" name="email" placeholder="Email" value="{{ form.email.value|default_if_none:'' }}" required><i class="bi bi-envelope"></i></div>
+{% if form.email.errors %}<p class="field-error">{{ form.email.errors.0 }}</p>{% endif %}
+<div class="field"><input type="password" name="password1" placeholder="Password" required><i class="bi bi-lock"></i></div>
+{% if form.password1.errors %}<p class="field-error">{{ form.password1.errors.0 }}</p>{% endif %}
+<div class="field"><input type="password" name="password2" placeholder="Confirm password" required><i class="bi bi-lock-fill"></i></div>
+{% if form.password2.errors %}<p class="field-error">{{ form.password2.errors.0 }}</p>{% endif %}
+<button class="btn" type="submit">Sign Up</button>
+<div class="bottom-link">Already have an account? <a href="{% url 'login' %}">Login</a></div>
+</form></body></html>
